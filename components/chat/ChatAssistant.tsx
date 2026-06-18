@@ -22,6 +22,7 @@ import {
 import { ChatInput } from "@/components/chat/ChatInput";
 import { Message } from "@/components/chat/Message";
 import { MessageList } from "@/components/chat/MessageList";
+import { SuggestedQuestions } from "@/components/chat/SuggestedQuestions";
 import { useMediaQuery } from "@/lib/hooks/use-media-query";
 
 interface ChatAssistantProps {
@@ -57,7 +58,17 @@ export function ChatAssistant({ propertyCode }: ChatAssistantProps) {
       <MessageList
         messages={messages}
         pending={pending}
-        topSlot={<Message role="assistant">{WELCOME}</Message>}
+        topSlot={
+          <>
+            <Message role="assistant">{WELCOME}</Message>
+            {messages.length === 0 && (
+              <SuggestedQuestions
+                onSelect={(text) => sendMessage({ text })}
+                disabled={busy}
+              />
+            )}
+          </>
+        }
       />
       {error && (
         <div className="flex items-center justify-between gap-2 border-t bg-destructive/10 px-4 py-2 text-sm text-destructive">
