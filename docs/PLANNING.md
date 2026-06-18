@@ -113,7 +113,7 @@ export const ExperienceGuideSchema = z.object({
     distance: z.string().describe('Distância aproximada, ex: "Aprox. 1,2 km"'),
     priceRange: z.enum(['$', '$$', '$$$']),
     description: z.string().describe('1-2 frases sobre o tipo de cozinha'),
-  })).min(3).max(5),
+  })).min(4).max(5),
   attractions: z.array(z.object({
     name: z.string(),
     distance: z.string(),
