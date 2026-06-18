@@ -11,3 +11,49 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// A short-term rental managed by Seazone. The `code` (e.g. "FLN001") is the
+// public route param at /[code], so it doubles as the primary key.
+//
+// Variable, document-shaped fields (address, operational, rules, amenities,
+// host) are stored as Json rather than columns: their shape differs per
+// property (FLN001 has a parking identifier, GRM001 doesn't) and they map 1:1
+// to the challenge brief's JSON. Typed access lives in lib/types/property.ts.
+model Property {
+  code             String   @id
+  name             String
+  propertyType     String   @map("property_type")
+  bedroomQuantity  Int      @map("bedroom_quantity")
+  bathroomQuantity Int      @map("bathroom_quantity")
+  guestCapacity    Int      @map("guest_capacity")
+
+  address     Json
+  operational Json
+  rules       Json
+  amenities   Json
+  host        Json
+  images      String[]
+
+  guide GeneratedGuide?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("properties")
+}
+
+// Cached AI-generated local guide for a property (challenge requires caching
+// generated content). 1:1 with Property — propertyCode is both the foreign key
+// and primary key, so regeneration is a simple upsert. `content` holds the
+// validated ExperienceGuideSchema output; `model` records which AI model
+// produced it, enabling cache invalidation when the model changes.
+model GeneratedGuide {
+  propertyCode String   @id @map("property_code")
+  content      Json
+  model        String
+  generatedAt  DateTime @default(now()) @map("generated_at")
+
+  property Property @relation(fields: [propertyCode], references: [code], onDelete: Cascade)
+
+  @@map("generated_guides")
+}
