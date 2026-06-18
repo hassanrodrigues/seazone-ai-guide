@@ -46,6 +46,25 @@ Imóveis de demonstração:
 1. Clonar o repositório
 2. `npm install`
 3. Copiar `.env.example` pra `.env.local` e preencher
+
+### Alternativa: Postgres local via Docker
+
+Se você preferir não criar conta no Neon, pode rodar Postgres local via Docker:
+
+```bash
+docker run -d \
+  --name seazone-pg \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=seazone \
+  -p 5432:5432 \
+  postgres:16
+
+# Depois, em .env.local:
+# DATABASE_URL=postgresql://postgres:postgres@localhost:5432/seazone
+```
+
+Qualquer Postgres 14+ funciona — Supabase, Railway, RDS, etc.
+
 4. `npx prisma migrate deploy`
 5. `npx prisma db seed`
 6. `npm run dev` — abre em http://localhost:3000
