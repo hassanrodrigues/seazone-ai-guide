@@ -33,6 +33,15 @@ describe("findByCode", () => {
     expect(findUnique).toHaveBeenCalledWith({ where: { code: "GRM001" } });
   });
 
+  it("accepts a two-letter prefix code (e.g. SP001)", async () => {
+    findUnique.mockResolvedValue({ code: "SP001" });
+
+    const result = await findByCode("sp001");
+
+    expect(findUnique).toHaveBeenCalledWith({ where: { code: "SP001" } });
+    expect(result).toEqual({ code: "SP001" });
+  });
+
   it("returns null when a well-formed code has no matching row", async () => {
     findUnique.mockResolvedValue(null);
 

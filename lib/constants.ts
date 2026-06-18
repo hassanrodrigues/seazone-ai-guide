@@ -13,8 +13,8 @@ export const CHAT_TEMPERATURE = 0.2;
 export const GUIDE_MAX_TOKENS = 2000;
 export const CHAT_MAX_TOKENS = 300;
 
-/** Property code format: 3 uppercase letters + 3 digits, e.g. "FLN001". */
-export const PROPERTY_CODE_REGEX = /^[A-Z]{3}\d{3}$/;
+/** Property code format: 2–3 uppercase letters + 3 digits, e.g. "FLN001" or "SP001". */
+export const PROPERTY_CODE_REGEX = /^[A-Z]{2,3}\d{3}$/;
 
 /** Max length of a single user chat message, enforced client- and server-side. */
 export const MAX_USER_MESSAGE_LENGTH = 1000;
