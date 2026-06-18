@@ -1,7 +1,9 @@
-import { cache } from "react";
+import { cache, Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+import { ExperienceGuide } from "@/components/guide/ExperienceGuide";
+import { GuideSkeleton } from "@/components/guide/GuideSkeleton";
 import { AccessSection } from "@/components/property/AccessSection";
 import { AmenitiesGrid } from "@/components/property/AmenitiesGrid";
 import { ContactSection } from "@/components/property/ContactSection";
@@ -66,6 +68,9 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
       <AccessSection operational={property.operational} />
       <RulesSection rules={property.rules} />
       <AmenitiesGrid amenities={property.amenities} />
+      <Suspense fallback={<GuideSkeleton />}>
+        <ExperienceGuide propertyCode={property.code} />
+      </Suspense>
       <ContactSection host={property.host} address={property.address} />
     </main>
   );

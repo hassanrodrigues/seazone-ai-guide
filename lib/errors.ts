@@ -26,3 +26,15 @@ export class AIGenerationError extends Error {
     this.name = "AIGenerationError";
   }
 }
+
+/**
+ * Google Places API request failed (missing key, permission denied, rate limit,
+ * network). Not user-facing: the guide service catches this and falls back to
+ * ungrounded generation, so it never surfaces as an HTTP status.
+ */
+export class PlacesApiError extends Error {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(message, options);
+    this.name = "PlacesApiError";
+  }
+}
