@@ -1,4 +1,9 @@
-export default function Home() {
+import { PropertyCard } from "@/components/landing/PropertyCard";
+import { listProperties } from "@/lib/services/property.service";
+
+export default async function Home() {
+  const properties = await listProperties();
+
   return (
     <main className="mx-auto w-full max-w-2xl px-4 py-8 md:max-w-5xl">
       <section className="mx-auto max-w-2xl text-center">
@@ -22,6 +27,23 @@ export default function Home() {
           guia único por propriedade — com dados reais da estadia e dicas da
           região geradas por IA.
         </p>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+          Imóveis disponíveis
+        </h2>
+        <div className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {properties.map((property) => (
+            <PropertyCard
+              key={property.code}
+              code={property.code}
+              name={property.name}
+              address={property.address}
+              imageUrl={property.images[0]}
+            />
+          ))}
+        </div>
       </section>
 
       <footer className="mt-16 border-t pt-6 text-center text-xs text-muted-foreground">
