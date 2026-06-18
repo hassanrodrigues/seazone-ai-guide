@@ -13,9 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Seazone — Guia do Hóspede",
-  description:
-    "Guia digital personalizado da sua estadia: acesso, regras, comodidades e dicas da região.",
+  title: "Seazone Guest Guide",
+  description: "Guias personalizados de hospedagem, gerados por IA",
+  openGraph: {
+    title: "Seazone Guest Guide",
+    description: "Guias personalizados de hospedagem, gerados por IA",
+  },
 };
 
 export default function RootLayout({

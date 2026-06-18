@@ -27,3 +27,15 @@ export async function findByCode(code: string): Promise<TypedProperty | null> {
   // declared in lib/types/property.ts, so we narrow to TypedProperty here.
   return property as TypedProperty | null;
 }
+
+/**
+ * List all properties, ordered by code. Used by the landing page to render the
+ * directory of available guides.
+ */
+export async function listProperties(): Promise<TypedProperty[]> {
+  const properties = await prisma.property.findMany({
+    orderBy: { code: "asc" },
+  });
+
+  return properties as unknown as TypedProperty[];
+}
