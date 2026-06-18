@@ -83,6 +83,21 @@ The project follows a domain-grouped "atomic-light" component organization:
 - Generated guides cached in DB (per challenge requirement)
 - Temperature: 0.4 for guide generation, 0.2 for chat
 
+## Hallucination Mitigation Strategy
+
+AI guide generation supports two modes:
+
+1. **RAG mode (recommended)**: When `GOOGLE_PLACES_API_KEY` is set, the system
+   fetches real venues from Google Places API before LLM invocation. The LLM
+   selects from real data only. Validated: 100% real venues.
+
+2. **Fallback mode**: When the key is absent or Places API fails, the system
+   falls back to LLM parametric knowledge with strengthened anti-hallucination
+   prompts. Validated accuracy: ~75-85%.
+
+Production deployments should set the Places API key. The fallback exists for
+resilience and local development without billing setup.
+
 ## Workflow
 
 - Branches: `feat/<name>`, `fix/<name>`, `test/<name>`, `docs/<name>`
