@@ -5,9 +5,13 @@ import { Prisma } from "@/app/generated/prisma/client";
 import { AI_MODEL, GUIDE_MAX_TOKENS, GUIDE_TEMPERATURE } from "@/lib/constants";
 import { prisma } from "@/lib/db";
 import { AIGenerationError, PropertyNotFoundError } from "@/lib/errors";
-import { buildGuideSystemPrompt } from "@/lib/ai/prompts/guide-generator";
+import {
+  buildGuideSystemPrompt,
+  type RealPlacesContext,
+} from "@/lib/ai/prompts/guide-generator";
 import { ExperienceGuideSchema, type ExperienceGuide } from "@/lib/ai/schemas";
 import { findByCode } from "@/lib/services/property.service";
+import { findRealPlaces } from "@/lib/services/places.service";
 
 /**
  * Return the local guide for a property, generating and caching it on first
@@ -18,6 +22,33 @@ import { findByCode } from "@/lib/services/property.service";
  * Throws PropertyNotFoundError if the code resolves to no property, and wraps
  * any AI SDK failure in AIGenerationError so callers map it to a single status.
  */
+/**
+ * Fetch real venues to ground generation. Returns undefined (triggering
+ * fallback mode) if the Places API is unavailable for any reason — a missing
+ * key in local dev, or a transient/permission failure in production. Logs a
+ * detailed warning so the degraded mode is visible in the server logs.
+ */
+async function fetchGrounding(
+  code: string,
+  address: { neighborhood: string; city: string },
+): Promise<RealPlacesContext | undefined> {
+  const location = `${address.neighborhood}, ${address.city}`;
+  try {
+    const [restaurants, attractions, essentials] = await Promise.all([
+      findRealPlaces("restaurants", location),
+      findRealPlaces("tourist attractions and landmarks", location),
+      findRealPlaces("pharmacy supermarket", location),
+    ]);
+    return { restaurants, attractions, essentials };
+  } catch (error) {
+    console.warn(
+      `[guide] Places API unavailable for ${code}; generating WITHOUT grounding (fallback mode). Reason:`,
+      error instanceof Error ? error.message : error,
+    );
+    return undefined;
+  }
+}
+
 export async function getOrGenerate(
   propertyCode: string,
 ): Promise<ExperienceGuide> {
@@ -36,12 +67,17 @@ export async function getOrGenerate(
     throw new PropertyNotFoundError(code);
   }
 
+  // Ground generation in real venues (RAG). If the Places API is unavailable,
+  // fall back to ungrounded generation under the strengthened prompt — the
+  // guide still generates, just without the real-place allowlist.
+  const places = await fetchGrounding(code, property.address);
+
   let guide: ExperienceGuide;
   try {
     const { object } = await generateObject({
       model: anthropic(AI_MODEL),
       schema: ExperienceGuideSchema,
-      system: buildGuideSystemPrompt(property),
+      system: buildGuideSystemPrompt(property, places),
       prompt:
         "Gere o guia de experiências local para este imóvel, seguindo rigorosamente as regras do sistema.",
       temperature: GUIDE_TEMPERATURE,
