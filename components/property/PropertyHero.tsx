@@ -6,11 +6,18 @@ import type { PropertyAddress } from "@/lib/types/property";
 
 interface PropertyHeroProps {
   name: string;
+  propertyType: string;
   address: PropertyAddress;
   imageUrl?: string;
 }
 
-export function PropertyHero({ name, address, imageUrl }: PropertyHeroProps) {
+export function PropertyHero({
+  name,
+  propertyType,
+  address,
+  imageUrl,
+}: PropertyHeroProps) {
+  const type = propertyType.charAt(0).toUpperCase() + propertyType.slice(1);
   return (
     <section className="relative aspect-[16/9] max-h-[55vh] w-full overflow-hidden md:aspect-[21/9]">
       {imageUrl ? (
@@ -39,7 +46,7 @@ export function PropertyHero({ name, address, imageUrl }: PropertyHeroProps) {
         </h1>
         <p className="mt-1 flex items-center gap-1.5 text-sm text-white/90 md:text-base">
           <MapPin className="size-4 shrink-0" aria-hidden />
-          {address.neighborhood}, {address.city}/{address.state}
+          {type} · {address.neighborhood} · {address.city} - {address.state}
         </p>
       </div>
     </section>
