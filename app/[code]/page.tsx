@@ -74,7 +74,11 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         <RulesSection rules={property.rules} />
         <AmenitiesGrid amenities={property.amenities} />
         <Suspense fallback={<GuideSkeleton />}>
-          <ExperienceGuide propertyCode={property.code} />
+          <ExperienceGuide
+            propertyCode={property.code}
+            originAddress={`${property.address.street}, ${property.address.number} - ${property.address.neighborhood}, ${property.address.city}/${property.address.state}`}
+            city={property.address.city}
+          />
         </Suspense>
         <ContactSection host={property.host} address={property.address} />
       </div>

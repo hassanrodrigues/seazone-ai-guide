@@ -15,11 +15,19 @@ import type { ExperienceGuide as ExperienceGuideData } from "@/lib/ai/schemas";
 
 interface ExperienceGuideProps {
   propertyCode: string;
+  /** Property address, used as the origin for Maps directions deep links. */
+  originAddress: string;
+  /** Property city, appended to venue names so Maps resolves the right place. */
+  city: string;
 }
 
 type Status = "loading" | "error" | "success";
 
-export function ExperienceGuide({ propertyCode }: ExperienceGuideProps) {
+export function ExperienceGuide({
+  propertyCode,
+  originAddress,
+  city,
+}: ExperienceGuideProps) {
   const [status, setStatus] = useState<Status>("loading");
   const [guide, setGuide] = useState<ExperienceGuideData | null>(null);
 
@@ -78,9 +86,21 @@ export function ExperienceGuide({ propertyCode }: ExperienceGuideProps) {
       {status === "success" && guide && (
         <div className="space-y-6">
           <WelcomeMessage message={guide.welcomeMessage} />
-          <RestaurantList restaurants={guide.restaurants} />
-          <AttractionList attractions={guide.attractions} />
-          <EssentialsList essentials={guide.essentials} />
+          <RestaurantList
+            restaurants={guide.restaurants}
+            originAddress={originAddress}
+            city={city}
+          />
+          <AttractionList
+            attractions={guide.attractions}
+            originAddress={originAddress}
+            city={city}
+          />
+          <EssentialsList
+            essentials={guide.essentials}
+            originAddress={originAddress}
+            city={city}
+          />
           <SeasonalTip tip={guide.seasonalTip} />
         </div>
       )}
