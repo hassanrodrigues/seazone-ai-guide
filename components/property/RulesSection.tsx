@@ -1,4 +1,12 @@
-import { Baby, Check, Cigarette, PartyPopper, PawPrint, X } from "lucide-react";
+import {
+  Baby,
+  Backpack,
+  Check,
+  Cigarette,
+  PartyPopper,
+  PawPrint,
+  X,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -20,13 +28,6 @@ interface RuleItem {
 export function RulesSection({ rules }: RulesSectionProps) {
   const items: RuleItem[] = [
     {
-      icon: Baby,
-      label: "Crianças",
-      allowed: rules.suitable_for_children,
-      yes: "Bem-vindas",
-      no: "Não recomendado",
-    },
-    {
       icon: PawPrint,
       label: "Pets",
       allowed: rules.allow_pet,
@@ -39,6 +40,20 @@ export function RulesSection({ rules }: RulesSectionProps) {
       allowed: rules.smoking_permitted,
       yes: "Permitido",
       no: "Não permitido",
+    },
+    {
+      icon: Backpack,
+      label: "Crianças",
+      allowed: rules.suitable_for_children,
+      yes: "Bem-vindas",
+      no: "Não recomendado",
+    },
+    {
+      icon: Baby,
+      label: "Bebês",
+      allowed: rules.suitable_for_babies,
+      yes: "Bem-vindos",
+      no: "Não recomendado",
     },
     {
       icon: PartyPopper,
@@ -55,7 +70,7 @@ export function RulesSection({ rules }: RulesSectionProps) {
         Regras da estadia
       </h2>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {items.map(({ icon: Icon, label, allowed, yes, no }) => (
           <Card key={label} size="sm">
             <CardContent className="flex items-center justify-between gap-2">
