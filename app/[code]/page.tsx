@@ -59,6 +59,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
     <main>
       <PropertyHero
         name={property.name}
+        propertyType={property.propertyType}
         address={property.address}
         imageUrl={property.images[0]}
       />
