@@ -12,14 +12,14 @@ interface PropertyHeroProps {
 
 export function PropertyHero({ name, address, imageUrl }: PropertyHeroProps) {
   return (
-    <section className="relative aspect-[16/9] w-full overflow-hidden md:aspect-[21/9]">
+    <section className="relative aspect-[16/9] max-h-[55vh] w-full overflow-hidden md:aspect-[21/9]">
       {imageUrl ? (
         <Image
           src={imageUrl}
           alt={`Foto de ${name}`}
           fill
           priority
-          sizes="(max-width: 768px) 100vw, 896px"
+          sizes="100vw"
           className="object-cover"
         />
       ) : (
@@ -34,7 +34,7 @@ export function PropertyHero({ name, address, imageUrl }: PropertyHeroProps) {
       </Badge>
 
       <div className="absolute inset-x-0 bottom-0 p-5 text-white md:p-6">
-        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
+        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
           {name}
         </h1>
         <p className="mt-1 flex items-center gap-1.5 text-sm text-white/90 md:text-base">
