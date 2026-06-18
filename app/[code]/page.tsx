@@ -2,6 +2,7 @@ import { cache, Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+import { ChatAssistant } from "@/components/chat/ChatAssistant";
 import { ExperienceGuide } from "@/components/guide/ExperienceGuide";
 import { GuideSkeleton } from "@/components/guide/GuideSkeleton";
 import { AccessSection } from "@/components/property/AccessSection";
@@ -54,6 +55,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
   }
 
   return (
+    <>
     <main className="mx-auto w-full max-w-2xl space-y-8 px-4 py-6 md:max-w-4xl md:py-10">
       <PropertyHero
         name={property.name}
@@ -73,5 +75,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
       </Suspense>
       <ContactSection host={property.host} address={property.address} />
     </main>
+    <ChatAssistant propertyCode={property.code} />
+    </>
   );
 }
