@@ -135,6 +135,10 @@ AI guide generation supports two modes:
 Production deployments should set the Places API key. The fallback exists for
 resilience and local development without billing setup.
 
+The Vercel deployment runs in RAG mode. The 4 sample property guides were
+regenerated post-activation and verified against the live Google Places
+dataset — all venues are real and locatable on Google Maps.
+
 ## Workflow
 
 - Branches: `feat/<name>`, `fix/<name>`, `test/<name>`, `docs/<name>`
