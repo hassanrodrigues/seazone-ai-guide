@@ -12,7 +12,7 @@ interface PropertyHeroProps {
 
 export function PropertyHero({ name, address, imageUrl }: PropertyHeroProps) {
   return (
-    <section className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl md:aspect-[21/9]">
+    <section className="relative aspect-[16/9] w-full overflow-hidden md:aspect-[21/9]">
       {imageUrl ? (
         <Image
           src={imageUrl}
