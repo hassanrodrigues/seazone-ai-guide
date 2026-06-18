@@ -46,7 +46,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <footer className="mt-16 border-t pt-6 text-center text-xs text-muted-foreground">
+      <footer className="mt-16 rounded-2xl bg-navy px-6 py-8 text-center text-xs text-white/70">
         <p>
           Built as a technical challenge for Seazone&apos;s AI Builder position.
         </p>
@@ -54,7 +54,7 @@ export default async function Home() {
           href="https://github.com/hassanrodrigues/seazone-ai-guide"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-1 inline-block underline underline-offset-4 hover:text-foreground"
+          className="mt-1 inline-block text-white/90 underline underline-offset-4 hover:text-white"
         >
           github.com/hassanrodrigues/seazone-ai-guide
         </a>

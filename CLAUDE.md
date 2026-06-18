@@ -132,6 +132,15 @@ Focus on high-leverage tests:
 | Design system | Atomic-light (domain-grouped) | Scope doesn't justify strict 5-layer Atomic |
 | Deployment | Vercel | Per-PR previews align with PR workflow |
 
+### Accessibility note
+
+Primary CTA contrast (white text on #FF6B5C coral) measures ~2.5:1, below
+WCAG AA (4.5:1). This combination is brand-accurate — matches the official
+Seazone guidebook design. A production-ready iteration would either:
+(a) propose navy-on-coral text variants to the design team, or (b) add ARIA
+labels + larger font sizes (3:1 threshold for large text). Documented as a
+known accessibility consideration rather than an oversight.
+
 ## How AI Was Used
 
 [FILL IN AS DEVELOPMENT PROGRESSES]

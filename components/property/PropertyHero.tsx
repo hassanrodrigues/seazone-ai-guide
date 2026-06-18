@@ -27,7 +27,7 @@ export function PropertyHero({ name, address, imageUrl }: PropertyHeroProps) {
       )}
 
       {/* Darken the bottom so the white text stays legible over any photo. */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/10 to-transparent" />
 
       <Badge className="absolute top-4 left-4 bg-white/90 text-foreground backdrop-blur-sm">
         Bem-vindo à sua estadia
