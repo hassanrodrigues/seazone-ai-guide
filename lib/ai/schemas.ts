@@ -52,9 +52,11 @@ export const ExperienceGuideSchema = z.object({
     ),
   restaurants: z
     .array(RestaurantSchema)
-    .min(4)
+    .min(3)
     .max(5)
-    .describe("4 a 5 restaurantes reais próximos, dos melhores avaliados"),
+    .describe(
+      "3 a 5 restaurantes reais e verificáveis. Prefira menos opções a inventar nomes para preencher a lista",
+    ),
   attractions: z
     .array(AttractionSchema)
     .min(3)
@@ -62,8 +64,8 @@ export const ExperienceGuideSchema = z.object({
     .describe("3 a 4 atrações reais próximas"),
   essentials: z
     .array(EssentialSchema)
-    .min(3)
-    .describe("Pelo menos 3 serviços essenciais reais próximos"),
+    .min(2)
+    .describe("Pelo menos 2 serviços essenciais reais próximos"),
   seasonalTip: z
     .string()
     .describe(
