@@ -5,7 +5,8 @@ export default async function Home() {
   const properties = await listProperties();
 
   return (
-    <main className="mx-auto w-full max-w-2xl px-4 py-8 md:max-w-5xl">
+    <main>
+      <div className="mx-auto w-full max-w-2xl px-4 py-8 md:max-w-5xl lg:max-w-6xl">
       <section className="mx-auto max-w-2xl text-center">
         <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
           Seazone Guest Guide
@@ -45,19 +46,23 @@ export default async function Home() {
           ))}
         </div>
       </section>
+      </div>
 
-      <footer className="mt-16 border-t pt-6 text-center text-xs text-muted-foreground">
-        <p>
-          Built as a technical challenge for Seazone&apos;s AI Builder position.
-        </p>
-        <a
-          href="https://github.com/hassanrodrigues/seazone-ai-guide"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-1 inline-block underline underline-offset-4 hover:text-foreground"
-        >
-          github.com/hassanrodrigues/seazone-ai-guide
-        </a>
+      <footer className="mt-16 bg-navy py-12 text-white">
+        <div className="mx-auto w-full max-w-2xl px-4 text-center text-xs text-white/70 md:max-w-5xl lg:max-w-6xl">
+          <p>
+            Built as a technical challenge for Seazone&apos;s AI Builder
+            position.
+          </p>
+          <a
+            href="https://github.com/hassanrodrigues/seazone-ai-guide"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 inline-block text-white/90 underline underline-offset-4 hover:text-white"
+          >
+            github.com/hassanrodrigues/seazone-ai-guide
+          </a>
+        </div>
       </footer>
     </main>
   );

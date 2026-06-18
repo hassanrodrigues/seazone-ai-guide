@@ -56,24 +56,26 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
   return (
     <>
-    <main className="mx-auto w-full max-w-2xl space-y-8 px-4 py-6 md:max-w-4xl md:py-10">
+    <main>
       <PropertyHero
         name={property.name}
         address={property.address}
         imageUrl={property.images[0]}
       />
-      <QuickInfoCards
-        checkInTime={property.rules.check_in_time}
-        checkOutTime={property.rules.check_out_time}
-        guestCapacity={property.guestCapacity}
-      />
-      <AccessSection operational={property.operational} />
-      <RulesSection rules={property.rules} />
-      <AmenitiesGrid amenities={property.amenities} />
-      <Suspense fallback={<GuideSkeleton />}>
-        <ExperienceGuide propertyCode={property.code} />
-      </Suspense>
-      <ContactSection host={property.host} address={property.address} />
+      <div className="mx-auto w-full max-w-2xl space-y-8 px-4 py-8 md:max-w-4xl md:py-10 lg:max-w-6xl">
+        <QuickInfoCards
+          checkInTime={property.rules.check_in_time}
+          checkOutTime={property.rules.check_out_time}
+          guestCapacity={property.guestCapacity}
+        />
+        <AccessSection operational={property.operational} />
+        <RulesSection rules={property.rules} />
+        <AmenitiesGrid amenities={property.amenities} />
+        <Suspense fallback={<GuideSkeleton />}>
+          <ExperienceGuide propertyCode={property.code} />
+        </Suspense>
+        <ContactSection host={property.host} address={property.address} />
+      </div>
     </main>
     <ChatAssistant propertyCode={property.code} />
     </>

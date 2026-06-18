@@ -31,7 +31,9 @@ export function AttractionList({ attractions }: AttractionListProps) {
             <CardContent className="space-y-2">
               <h4 className="leading-snug font-medium">{a.name}</h4>
               <div className="flex flex-wrap items-center gap-1.5">
-                <Badge variant="secondary">{CATEGORY_LABELS[a.category]}</Badge>
+                <Badge className="bg-accent text-accent-foreground">
+                  {CATEGORY_LABELS[a.category]}
+                </Badge>
                 <span className="flex items-center gap-1 text-xs text-muted-foreground">
                   <MapPin className="size-3" aria-hidden />
                   {a.distance}
