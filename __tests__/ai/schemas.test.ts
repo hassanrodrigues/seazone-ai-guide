@@ -41,10 +41,18 @@ describe("ExperienceGuideSchema", () => {
     expect(ExperienceGuideSchema.safeParse(validPayload()).success).toBe(true);
   });
 
-  it("rejects payload with fewer than 3 restaurants", () => {
+  it("accepts payload with exactly 4 restaurants (the minimum)", () => {
     const r = ExperienceGuideSchema.safeParse({
       ...validPayload(),
-      restaurants: restaurants(2),
+      restaurants: restaurants(4),
+    });
+    expect(r.success).toBe(true);
+  });
+
+  it("rejects payload with fewer than 4 restaurants", () => {
+    const r = ExperienceGuideSchema.safeParse({
+      ...validPayload(),
+      restaurants: restaurants(3),
     });
     expect(r.success).toBe(false);
   });
@@ -93,6 +101,7 @@ describe("ExperienceGuideSchema", () => {
           restaurant(price),
           restaurant(),
           restaurant(),
+          restaurant(),
         ],
       });
       expect(r.success, `priceRange "${price}" should be valid`).toBe(true);
@@ -102,7 +111,7 @@ describe("ExperienceGuideSchema", () => {
   it("rejects a restaurant with an invalid priceRange ($$$$)", () => {
     const r = ExperienceGuideSchema.safeParse({
       ...validPayload(),
-      restaurants: [restaurant("$$$$"), restaurant(), restaurant()],
+      restaurants: [restaurant("$$$$"), restaurant(), restaurant(), restaurant()],
     });
     expect(r.success).toBe(false);
   });

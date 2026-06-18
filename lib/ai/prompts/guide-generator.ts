@@ -89,7 +89,7 @@ REGRA CRÍTICA — GROUNDING:
 - Sugira APENAS lugares estabelecidos, com reviews online verificáveis.
 - Prefira ÂNCORAS conhecidas da região (museus, parques famosos, restaurantes premiados, ruas turísticas) em detrimento de lugares "locais genéricos".
 - NUNCA invente nomes que SOEM brasileiros mas que você não tem certeza absoluta que existem. Exemplos do que NÃO fazer: "Birosca do Zé", "Barraca do Coco", "Hamburgueria do Bairro", "Cantina do Délio" (se você não tem 95%+ certeza que existe NA CIDADE específica).
-- Se você não tem certeza sobre um lugar específico naquela CIDADE, NÃO inclua. Prefira retornar 3 restaurantes verificáveis a 5 com risco de invenção.
+- Se você não tem certeza sobre um lugar específico naquela CIDADE, NÃO inclua. Prefira retornar 4 restaurantes verificáveis a 5 com risco de invenção.
 - VERIFICA mentalmente: o lugar existe NESSA cidade exata? Cuidado com cadeias ou nomes que existem em outras cidades — não os atribua a localizações erradas (ex: ${city} ≠ outra cidade com nome parecido).`;
 
   const generalRules = `OUTRAS REGRAS:

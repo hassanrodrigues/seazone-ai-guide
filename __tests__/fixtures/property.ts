@@ -71,6 +71,7 @@ export const sampleGuide: ExperienceGuide = {
     { name: "Box 32", cuisine: "Frutos do mar", distance: "Aprox. 1,2 km", priceRange: "$$", description: "Petiscos no Mercado Público." },
     { name: "Armazém Vieira", cuisine: "Frutos do mar", distance: "Aprox. 2,5 km", priceRange: "$$$", description: "Referência em frutos do mar." },
     { name: "Lagoa Viva", cuisine: "Brasileira", distance: "Aprox. 1,5 km", priceRange: "$$", description: "Cozinha contemporânea." },
+    { name: "Ataliba", cuisine: "Churrascaria", distance: "Aprox. 2,0 km", priceRange: "$$", description: "Rodízio de carnes." },
   ],
   attractions: [
     { name: "Lagoa da Conceição", category: "natureza", distance: "Aprox. 8 km", description: "Cartão-postal da ilha." },
