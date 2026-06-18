@@ -66,6 +66,8 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         <QuickInfoCards
           checkInTime={property.rules.check_in_time}
           checkOutTime={property.rules.check_out_time}
+          bedroomQuantity={property.bedroomQuantity}
+          bathroomQuantity={property.bathroomQuantity}
           guestCapacity={property.guestCapacity}
         />
         <AccessSection operational={property.operational} />
