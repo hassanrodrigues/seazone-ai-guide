@@ -18,7 +18,7 @@ alternative where each property has tailored data + AI-generated local content.
 - **Framework**: Next.js 16 (App Router) + TypeScript strict + React 19
 - **Styling**: Tailwind CSS v4 + shadcn/ui (Radix, Nova preset: Lucide + Geist)
 - **Database**: PostgreSQL via Neon (serverless)
-- **ORM**: Prisma 6
+- **ORM**: Prisma 7
 - **AI SDK**: Vercel AI SDK (`ai` + `@ai-sdk/anthropic`)
 - **Model**: Claude Sonnet 4.6 (`claude-sonnet-4-6`)
 - **Testing**: Vitest + Testing Library + jsdom
@@ -27,6 +27,15 @@ alternative where each property has tailored data + AI-generated local content.
 > Note: Next.js 16 has breaking changes from older versions. See AGENTS.md
 > (auto-included above) and consult node_modules/next/dist/docs/ for current
 > APIs before assuming behavior.
+
+> Note: Prisma 7 generates the client into `app/generated/prisma` (configured
+> via the schema's `generator` block), **not** into `node_modules/@prisma/client`.
+> That directory is gitignored, so it must be regenerated after every install —
+> the `postinstall: prisma generate` script handles this on Vercel and any fresh
+> clone. Without it, deploy builds fail on the `@/app/generated/prisma/client`
+> import. Prisma 7 also requires a driver adapter at runtime (`@prisma/adapter-pg`,
+> see `lib/db.ts`) and reads the seed command from `prisma.config.ts`
+> (`migrations.seed`), not from `package.json`.
 
 ## Architecture
 
