@@ -8,7 +8,7 @@
 
 ## Context
 
-Built as a 48h technical challenge for Seazone's AI Builder position. The
+Built as a technical challenge for Seazone's AI Builder position. The
 current Seazone guidebook (https://guia-do-hospede.seazone.com.br) is generic
 and identical across all properties. This project demonstrates a personalized
 alternative where each property has tailored data + AI-generated local content.
