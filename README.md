@@ -150,11 +150,12 @@ primeira visita (~20-30 segundos) e cacheia visitas subsequentes.
 
 ## Arquitetura
 
-- **[CLAUDE.md](CLAUDE.md)** — decisões de stack, convenções e trade-offs (em
-  inglês)
-- **[docs/PLANNING.md](docs/PLANNING.md)** — system prompts e chat invariants
-- **[docs/chat-verification.md](docs/chat-verification.md)** — resultados dos
-  testes anti-hallucination
+![Arquitetura do sistema](docs/architecture.png)
+
+Para mais detalhes sobre decisões de stack, convenções e trade-offs, veja
+[CLAUDE.md](CLAUDE.md). Para system prompts e chat invariants, veja
+[docs/PLANNING.md](docs/PLANNING.md). Para resultados dos testes
+anti-hallucination, veja [docs/chat-verification.md](docs/chat-verification.md).
 
 ## Estrutura do Projeto
 

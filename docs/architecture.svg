@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2800" height="1800" viewBox="0 0 1400 900" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="navy" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#0B2340"/>
+    </marker>
+    <marker id="coral" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#FF6B5C"/>
+    </marker>
+    <marker id="gray" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="900" fill="#FAFAFA"/>
+
+  <!-- Title -->
+  <text x="700" y="44" text-anchor="middle" font-size="30" font-weight="700" fill="#0B2340">Seazone Guest Guide — Arquitetura do Sistema</text>
+  <text x="700" y="70" text-anchor="middle" font-size="13" fill="#64748B">Next.js 16 · Vercel AI SDK v6 · Claude Sonnet 4.6 · Prisma / Neon · Google Places (RAG)</text>
+
+  <!-- ============ CAMADA 1: CLIENTE ============ -->
+  <rect x="60" y="92" width="1280" height="92" rx="16" fill="#F4F7FB" stroke="#E2E8F0"/>
+  <text x="84" y="118" font-size="13" font-weight="700" letter-spacing="1.5" fill="#64748B">CLIENTE</text>
+  <rect x="540" y="108" width="320" height="60" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="700" y="134" text-anchor="middle" font-size="16" font-weight="700" fill="#0B2340">Browser</text>
+  <text x="700" y="154" text-anchor="middle" font-size="12" fill="#475569">Dispositivo do usuário — mobile + desktop</text>
+
+  <!-- HTTPS arrow -->
+  <line x1="700" y1="184" x2="700" y2="212" stroke="#FF6B5C" stroke-width="2.5" marker-end="url(#coral)"/>
+  <text x="712" y="203" font-size="13" font-weight="600" fill="#FF6B5C">HTTPS</text>
+
+  <!-- ============ CAMADA 2: NEXT.JS ============ -->
+  <rect x="60" y="216" width="1280" height="152" rx="16" fill="#F4F7FB" stroke="#E2E8F0"/>
+  <text x="84" y="242" font-size="13" font-weight="700" letter-spacing="1.5" fill="#64748B">NEXT.JS (APP ROUTER) · VERCEL</text>
+
+  <rect x="80" y="256" width="292" height="92" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="226" y="290" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">app/page.tsx</text>
+  <text x="226" y="312" text-anchor="middle" font-size="12" fill="#475569">Landing — estática</text>
+  <text x="226" y="330" text-anchor="middle" font-size="12" fill="#475569">lista 4 imóveis</text>
+
+  <rect x="396" y="256" width="292" height="92" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="542" y="290" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">app/[code]/page.tsx</text>
+  <text x="542" y="312" text-anchor="middle" font-size="12" fill="#475569">Página do imóvel</text>
+  <text x="542" y="330" text-anchor="middle" font-size="12" fill="#475569">SSR dinâmico</text>
+
+  <rect x="712" y="256" width="292" height="92" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="858" y="290" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">app/api/chat/route.ts</text>
+  <text x="858" y="312" text-anchor="middle" font-size="12" fill="#475569">Chat com streaming</text>
+  <text x="858" y="330" text-anchor="middle" font-size="12" fill="#FF6B5C" font-weight="600">nodejs · citação estrita</text>
+
+  <rect x="1028" y="256" width="292" height="92" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="1174" y="290" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">app/api/generate-guide/</text>
+  <text x="1174" y="312" text-anchor="middle" font-size="12" fill="#475569">route.ts</text>
+  <text x="1174" y="330" text-anchor="middle" font-size="12" fill="#FF6B5C" font-weight="600">com cache</text>
+
+  <!-- chamada interna arrows -->
+  <line x1="290" y1="368" x2="290" y2="404" stroke="#0B2340" stroke-width="2" marker-end="url(#navy)"/>
+  <line x1="700" y1="368" x2="700" y2="404" stroke="#0B2340" stroke-width="2" marker-end="url(#navy)"/>
+  <line x1="1110" y1="368" x2="1110" y2="404" stroke="#0B2340" stroke-width="2" marker-end="url(#navy)"/>
+  <text x="712" y="392" font-size="13" font-weight="600" fill="#0B2340">chamada interna</text>
+
+  <!-- ============ CAMADA 3: CAMADA DE SERVIÇOS ============ -->
+  <rect x="60" y="408" width="1280" height="128" rx="16" fill="#F4F7FB" stroke="#E2E8F0"/>
+  <text x="84" y="434" font-size="13" font-weight="700" letter-spacing="1.5" fill="#64748B">CAMADA DE SERVIÇOS (lib/services/)</text>
+
+  <rect x="110" y="450" width="360" height="68" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="290" y="480" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">propertyService.findByCode</text>
+  <text x="290" y="500" text-anchor="middle" font-size="12" fill="#475569">validação + normalização</text>
+
+  <rect x="520" y="450" width="360" height="68" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="700" y="480" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">guideService.getOrGenerate</text>
+  <text x="700" y="500" text-anchor="middle" font-size="12" fill="#475569">padrão cache-aside</text>
+
+  <rect x="930" y="450" width="360" height="68" rx="12" fill="#E8EEF7" stroke="#0B2340" stroke-width="1.5"/>
+  <text x="1110" y="480" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">placesService.findRealPlaces</text>
+  <text x="1110" y="500" text-anchor="middle" font-size="12" fill="#475569">Retrieval RAG · opcional</text>
+
+  <!-- serviços -> externos arrows -->
+  <line x1="290" y1="536" x2="290" y2="596" stroke="#0B2340" stroke-width="2" marker-end="url(#navy)"/>
+  <rect x="300" y="552" width="124" height="22" rx="6" fill="#FAFAFA"/>
+  <text x="306" y="568" font-size="12" font-weight="600" fill="#0B2340">SQL via Prisma</text>
+
+  <line x1="700" y1="536" x2="700" y2="596" stroke="#FF6B5C" stroke-width="2.5" marker-end="url(#coral)"/>
+  <rect x="710" y="552" width="168" height="22" rx="6" fill="#FAFAFA"/>
+  <text x="716" y="568" font-size="12" font-weight="600" fill="#FF6B5C">REST API (streaming)</text>
+
+  <line x1="1110" y1="536" x2="1110" y2="596" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#gray)"/>
+  <rect x="1120" y="552" width="158" height="22" rx="6" fill="#FAFAFA"/>
+  <text x="1126" y="568" font-size="12" font-weight="600" fill="#64748B">REST API (opcional)</text>
+
+  <!-- ============ CAMADA 4: SERVIÇOS EXTERNOS ============ -->
+  <rect x="60" y="600" width="1280" height="150" rx="16" fill="#F4F7FB" stroke="#E2E8F0"/>
+  <text x="84" y="626" font-size="13" font-weight="700" letter-spacing="1.5" fill="#64748B">SERVIÇOS EXTERNOS</text>
+
+  <rect x="110" y="642" width="360" height="90" rx="12" fill="#EEF2F6" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="290" y="674" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">PostgreSQL · Neon</text>
+  <text x="290" y="696" text-anchor="middle" font-size="12" fill="#475569">armazena Property +</text>
+  <text x="290" y="714" text-anchor="middle" font-size="12" fill="#475569">GeneratedGuide (cache)</text>
+
+  <rect x="520" y="642" width="360" height="90" rx="12" fill="#EEF2F6" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="700" y="674" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">Anthropic API</text>
+  <text x="700" y="696" text-anchor="middle" font-size="12" fill="#475569">Claude Sonnet 4.6</text>
+  <text x="700" y="714" text-anchor="middle" font-size="12" fill="#475569">generateObject + streamText</text>
+
+  <rect x="930" y="642" width="360" height="90" rx="12" fill="#EEF2F6" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="1110" y="674" text-anchor="middle" font-size="15" font-weight="700" fill="#0B2340">Google Places API</text>
+  <text x="1110" y="696" text-anchor="middle" font-size="12" fill="#475569">opcional — modo RAG</text>
+  <text x="1110" y="714" text-anchor="middle" font-size="12" fill="#475569">só quando a chave está configurada</text>
+
+  <!-- ============ CALLOUTS ============ -->
+  <rect x="60" y="778" width="400" height="104" rx="10" fill="#FFE4E0" stroke="#FF6B5C" stroke-width="1.5"/>
+  <text x="80" y="802" font-size="14" font-weight="700" fill="#0B2340">DB cache</text>
+  <text x="80" y="826" font-size="12" fill="#0B2340">Uma vez gerado, o guia é salvo em GeneratedGuide;</text>
+  <text x="80" y="844" font-size="12" fill="#0B2340">requisições subsequentes servem do cache, pulando o LLM.</text>
+  <text x="80" y="868" font-size="11" font-style="italic" fill="#64748B">guideService ↔ Neon (GeneratedGuide)</text>
+
+  <rect x="500" y="778" width="400" height="104" rx="10" fill="#FFE4E0" stroke="#FF6B5C" stroke-width="1.5"/>
+  <text x="520" y="802" font-size="14" font-weight="700" fill="#0B2340">Anti-hallucination</text>
+  <text x="520" y="826" font-size="12" fill="#0B2340">A rota de chat cita apenas lugares presentes nos dados</text>
+  <text x="520" y="844" font-size="12" fill="#0B2340">do imóvel + guia gerado — citação estrita, nunca inventa.</text>
+  <text x="520" y="868" font-size="11" font-style="italic" fill="#64748B">app/api/chat/route.ts</text>
+
+  <rect x="940" y="778" width="400" height="104" rx="10" fill="#FFE4E0" stroke="#FF6B5C" stroke-width="1.5"/>
+  <text x="960" y="800" font-size="14" font-weight="700" fill="#0B2340">RAG grounding</text>
+  <text x="960" y="820" font-size="12" fill="#0B2340">Quando GOOGLE_PLACES_API_KEY está configurada, lugares</text>
+  <text x="960" y="836" font-size="12" fill="#0B2340">reais embasam a geração; caso contrário, um fallback</text>
+  <text x="960" y="852" font-size="12" fill="#0B2340">parametric é usado.</text>
+  <text x="960" y="872" font-size="11" font-style="italic" fill="#64748B">placesService.findRealPlaces</text>
+</svg>
