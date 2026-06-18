@@ -125,9 +125,11 @@ A geração do guia tem dois modos:
   validada: ~75-85% lugares reais em mercados menores. O chat funciona
   normalmente nos dois modos.
 
-Nota: o deploy atual em https://seazone-ai-guide.vercel.app roda em modo
-Fallback (não tem `GOOGLE_PLACES_API_KEY` configurada). Para ver o sistema em
-modo RAG, configure a chave em ambiente local.
+Nota: o deploy em https://seazone-ai-guide.vercel.app roda em **modo RAG** —
+Google Places API ativa em produção. Os 4 guides cacheados foram gerados com
+lugares verificados, validáveis no Google Maps (nomes, endereços e bairros
+reais). O fallback continua disponível como graceful degradation para
+desenvolvimento local ou caso a Places API falhe em runtime.
 
 O projeto roda end-to-end sem esta chave. O fallback gera um warning no log mas
 não causa erro.
