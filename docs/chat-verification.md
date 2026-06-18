@@ -1,4 +1,15 @@
-# Chat anti-hallucination verification (FLN001)
+# Chat Anti-Hallucination Verification
+
+Automated test of 9 invariants against the chat endpoint. All 9 pass.
+
+Cases a-h from the original spec; case i added during PR #8 fix to validate
+strict venue citation.
+
+Last verified: 2026-06-18
+
+---
+
+## Run detail (FLN001)
 
 Re-run after the strict-citation rule was added.
 

@@ -57,6 +57,43 @@ The project follows a domain-grouped "atomic-light" component organization:
 - `lib/ai/schemas.ts` — Zod schemas (single source of truth)
 - `lib/services/` — Business logic (property, guide)
 
+## Stack Rationale
+
+- **Next.js 16 (App Router)**: React Server Components reduce client JS for
+  static-heavy pages; built-in routing + SSR + streaming primitives cover all
+  needs. Chosen over plain React + Vite for native SSR. Chosen over Remix for
+  a stronger Vercel deployment story and AI SDK alignment.
+- **TypeScript strict**: catches errors at compile time, makes Prisma generated
+  types + AI SDK Zod schemas first-class. No reason to skip in a
+  production-track project.
+- **Tailwind v4 + shadcn/ui**: utility-first CSS keeps styles co-located with
+  markup, faster iteration than CSS modules. shadcn/ui copies primitives into
+  the repo (not a runtime dependency), giving full ownership without vendor
+  lock-in.
+- **Prisma 7 + PostgreSQL (Neon)**: type-safe queries match the TS-first
+  philosophy. Postgres handles JSON columns well (used for nested property
+  data). Neon's serverless free tier eliminates infra setup. Chosen over
+  Drizzle for migration tooling maturity. Chosen over MongoDB because the data
+  is inherently relational.
+- **Vercel AI SDK v6**: provider-agnostic abstraction over LLMs. Built-in
+  streaming, structured output via Zod, React hooks for chat UI. Chosen over
+  the raw Anthropic SDK for the streaming UI integration. Chosen over LangChain
+  for being lighter and more idiomatic to Next.js.
+- **Claude Sonnet 4.6**: best PT-BR fluency among current LLMs, strong
+  instruction-following (critical for anti-hallucination), integrates with the
+  Claude Code workflow. The AI SDK abstraction makes the provider swappable if
+  needed.
+- **Vitest + Testing Library**: faster than Jest, native ESM support, less
+  config. Testing Library encourages testing user-visible behavior, not
+  implementation details.
+- **Vercel (deploy)**: zero-config Next.js deployment, automatic preview
+  deployments per PR, edge network globally. Chosen over self-hosted because
+  time-to-deploy matters and Vercel + Neon together are ~2 minutes of setup.
+- **Google Places API (optional, RAG)**: verified venue data for grounding the
+  AI. Considered Foursquare (less reliable in Brazil), OpenStreetMap (less rich
+  data), Yelp (limited Brazil coverage). Places offers the best
+  quality-to-effort ratio for Brazilian venues.
+
 ## Data Flow
 
 1. GET /[code] → Server Component fetches Property via service
@@ -143,13 +180,61 @@ known accessibility consideration rather than an oversight.
 
 ## How AI Was Used
 
-[FILL IN AS DEVELOPMENT PROGRESSES]
+### Files that guide AI collaboration
 
-- Architecture and stack discussed with Claude before implementation
-- Scaffolding generated via Claude Code
-- System prompts iteratively refined using the prompt-tester skill
-- All commits co-authored with Claude (visible in git history)
-- Decisions documented inline in this file as encountered
+- `CLAUDE.md` — project source of truth, read on every Claude Code session
+- `AGENTS.md` — version-specific guardrails for Next 16
+- `docs/PLANNING.md` — system prompts, chat invariants, edge cases
+- `.claude/skills/prompt-tester` — chat invariants reference and prompt refining protocol
+- `.claude/commands/` — slash commands `/commit` and `/new-feature`
+
+### Iteration patterns
+
+- **Plan mode before code**: every feature began with Claude Code proposing an
+  inline plan with deviations + justifications, approved or revised before
+  writing code
+- **Atomic commits per logical milestone**: one PR per phase, multiple commits
+  inside, squash-merged
+- **Continuous validation against external sources**: AI-generated venues
+  checked against Google Places API
+- **Self-flagged honesty**: Claude Code transparently surfaced its own slips
+
+### Where AI struggled (and how we mitigated)
+
+(a) **Hallucination in small markets**: parametric LLM knowledge invented
+    plausible-sounding venue names ("Gasthof Gramado", "Birosca do Zé", "Barraca
+    do Coco" attributed to wrong cities). Mitigations: strengthened system
+    prompt with concrete bad examples + lowered schema minimums + RAG
+    architecture with Google Places API (optional, with prompt-only fallback).
+    See PR #7 for the iteration journey.
+
+(b) **Unfounded service inferences**: chat initially assumed amenities
+    (portaria, recepção) not in property data. Fixed with an explicit "do not
+    assume services not in data" rule.
+
+(c) **Loose venue citation in chat**: chat occasionally paraphrased guide venue
+    names. Fixed with a strict citation rule referencing the guide block.
+
+### Productivity observations
+
+Gains:
+
+- Boilerplate (Zod schemas, Prisma client setup, UI components)
+- Environment-specific gotchas caught early (Prisma 7 driver adapter, AI SDK v6
+  `maxOutputTokens`, Next 16 `params` Promise)
+- Self-correction loops (verification scripts, false-positive flagging)
+- Documentation kept in sync with code via dedicated CLAUDE.md and PLANNING.md
+
+Where human judgment mattered:
+
+- **Strategic pivots**: switching from prompt-only iteration to RAG when prompt
+  engineering hit a ceiling
+- **Trade-off decisions**: static prerendering vs ISR, prompt-only fallback vs
+  blocking on Places API setup
+- **Anti-hallucination validation**: sampling AI guide outputs against Google
+  Maps (AI cannot browse the web)
+- **Visual identity**: applying the Seazone brand palette without breaking
+  accessibility semantics
 
 ## Running Locally
 
