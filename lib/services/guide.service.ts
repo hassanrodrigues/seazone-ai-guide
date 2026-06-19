@@ -49,18 +49,12 @@ async function fetchGrounding(
   }
 }
 
-export async function getOrGenerate(
-  propertyCode: string,
-): Promise<ExperienceGuide> {
-  const code = propertyCode.trim().toUpperCase();
-
-  const cached = await prisma.generatedGuide.findUnique({
-    where: { propertyCode: code },
-  });
-  if (cached) {
-    return cached.content as unknown as ExperienceGuide;
-  }
-
+/**
+ * Generate a fresh guide for an (already normalized) code and persist it.
+ * Shared by the cache-miss path and the cache-invalid path so both reuse the
+ * same generation + upsert.
+ */
+async function generateAndPersist(code: string): Promise<ExperienceGuide> {
   // findByCode normalizes + validates the code and returns null when missing.
   const property = await findByCode(code);
   if (!property) {
@@ -105,4 +99,29 @@ export async function getOrGenerate(
   });
 
   return guide;
+}
+
+export async function getOrGenerate(
+  propertyCode: string,
+): Promise<ExperienceGuide> {
+  const code = propertyCode.trim().toUpperCase();
+
+  const cached = await prisma.generatedGuide.findUnique({
+    where: { propertyCode: code },
+  });
+  if (cached) {
+    // Re-validate the cached JSON against the current schema rather than
+    // trusting it blindly: the schema can evolve (e.g. the restaurants minimum
+    // changed across versions), so a stale row would otherwise be served as-is.
+    const result = ExperienceGuideSchema.safeParse(cached.content);
+    if (result.success) {
+      return result.data;
+    }
+    console.warn(
+      `Cached guide for ${code} failed schema validation, regenerating.`,
+    );
+    // Fall through: regenerate and overwrite the stale cache row.
+  }
+
+  return generateAndPersist(code);
 }
