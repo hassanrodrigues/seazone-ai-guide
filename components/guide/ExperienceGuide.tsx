@@ -31,8 +31,11 @@ export function ExperienceGuide({
   const [status, setStatus] = useState<Status>("loading");
   const [guide, setGuide] = useState<ExperienceGuideData | null>(null);
 
-  const load = useCallback(async () => {
-    setStatus("loading");
+  // Fetch the guide. No synchronous setState here — the first state update
+  // happens only after the await resolves, so kicking this off from the mount
+  // effect doesn't trigger a cascading render (initial status is already
+  // "loading", which renders the skeleton).
+  const fetchGuide = useCallback(async () => {
     try {
       const res = await fetch("/api/generate-guide", {
         method: "POST",
@@ -48,9 +51,20 @@ export function ExperienceGuide({
     }
   }, [propertyCode]);
 
+  // Retry from the error state: show the skeleton again, then refetch.
+  const retry = useCallback(() => {
+    setStatus("loading");
+    void fetchGuide();
+  }, [fetchGuide]);
+
   useEffect(() => {
-    load();
-  }, [load]);
+    // Data-load on mount. The rule flags any setState-bearing call inside an
+    // effect, but fetchGuide only updates state AFTER an awaited fetch (a
+    // microtask, not a synchronous cascading render), so the warning doesn't
+    // apply to this client-side fetch-on-mount pattern.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchGuide();
+  }, [fetchGuide]);
 
   return (
     <section className="space-y-6">
@@ -75,7 +89,7 @@ export function ExperienceGuide({
             variant="outline"
             size="sm"
             className="mt-3"
-            onClick={load}
+            onClick={retry}
           >
             <RefreshCw aria-hidden />
             Tentar novamente
