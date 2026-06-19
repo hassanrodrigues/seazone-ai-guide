@@ -149,13 +149,19 @@ dataset — all venues are real and locatable on Google Maps.
 
 ## Testing Strategy
 
-Focus on high-leverage tests:
+Focus on high-leverage tests over coverage targets. 42 tests (Vitest), covering
+the critical non-UI layers:
 
-1. `property.service.test.ts` — findByCode, normalization, 404 path
-2. `guide.service.test.ts` — cache hit/miss with mocked AI
-3. `schemas.test.ts` — Zod validates expected shapes
-4. `prompts/guide-generator.test.ts` — context injection (city, neighborhood, month)
-5. `api/chat/route.test.ts` — returns 404 for invalid propertyCode
+1. `__tests__/services/property.service.test.ts` — findByCode normalization, validation, null path
+2. `__tests__/services/guide.service.test.ts` — cache-aside (hit/miss, cached-schema revalidation, error) with mocked Prisma + AI SDK
+3. `__tests__/ai/schemas.test.ts` — ExperienceGuideSchema bounds, enums, required fields
+4. `__tests__/ai/prompts.test.ts` — guide + chat system prompts (context injection, grounding, anti-hallucination rule)
+5. `__tests__/lib/maps.test.ts` — Maps URL building + parseDistanceKm (PT-BR comma decimals)
+
+Shared fixtures live in `__tests__/fixtures/property.ts`.
+
+Future work (not yet covered): API route handlers (status mapping) and React
+component behavior would be the next highest-value additions.
 
 ## Out of Scope (intentional)
 
