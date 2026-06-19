@@ -8,9 +8,10 @@ contextual.
 
 ## Contexto
 
-Construído como desafio técnico para a vaga de AI Builder da Seazone. O guia
-atual da Seazone (https://guia-do-hospede.seazone.com.br) é genérico e idêntico
-em todos os imóveis. Este projeto demonstra uma alternativa personalizada onde
+Demonstração de um guidebook digital personalizado por imóvel, com geração de
+conteúdo por IA grounded em lugares reais. O guia atual da Seazone
+(https://guia-do-hospede.seazone.com.br) é genérico e idêntico em todos os
+imóveis. Este projeto demonstra uma alternativa personalizada onde
 cada propriedade tem conteúdo único.
 
 Imóveis de demonstração:

@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Seazone Guest Guide — AI Builder Challenge
+# Seazone Guest Guide
 
 > Personalized digital guidebook for Seazone short-term rentals. Each property
 > (e.g. `/FLN001`) gets a unique URL with property data, AI-generated local
@@ -8,7 +8,7 @@
 
 ## Context
 
-Built as a technical challenge for Seazone's AI Builder position. The
+Personalized digital guidebook for Seazone short-term rentals. The
 current Seazone guidebook (https://guia-do-hospede.seazone.com.br) is generic
 and identical across all properties. This project demonstrates a personalized
 alternative where each property has tailored data + AI-generated local content.
@@ -117,7 +117,7 @@ The project follows a domain-grouped "atomic-light" component organization:
 - Structured outputs via `generateObject` + Zod schemas
 - Prompts as code in `lib/ai/prompts/` — versioned, testable
 - Chat has strict anti-hallucination rule with explicit fallback message
-- Generated guides cached in DB (per challenge requirement)
+- Generated guides cached in DB to avoid regeneration on revisit
 - Temperature: 0.4 for guide generation, 0.2 for chat
 
 ## Hallucination Mitigation Strategy

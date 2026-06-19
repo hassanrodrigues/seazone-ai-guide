@@ -29,7 +29,7 @@ interface SeedProperty {
   host: PropertyHost;
 }
 
-// FLN001 and GRM001 are verbatim from the challenge brief (docs/spec-data.json).
+// FLN001 and GRM001 are verbatim from docs/spec-data.json (reference data).
 // SP001 and SAL001 are invented fixtures following the same structure, chosen to
 // exercise distinct rule/amenity combinations (pet-friendly penthouse with pool;
 // beach house that allows events).

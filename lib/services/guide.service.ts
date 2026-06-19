@@ -15,8 +15,8 @@ import { findRealPlaces } from "@/lib/services/places.service";
 
 /**
  * Return the local guide for a property, generating and caching it on first
- * request. The challenge requires generated guides to be cached, so a hit
- * returns the stored JSON without calling the model; a miss generates once,
+ * request. Generated guides are cached to avoid regeneration on revisit, so a
+ * hit returns the stored JSON without calling the model; a miss generates once,
  * persists, and returns.
  *
  * Throws PropertyNotFoundError if the code resolves to no property, and wraps

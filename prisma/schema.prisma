@@ -18,7 +18,7 @@ datasource db {
 // Variable, document-shaped fields (address, operational, rules, amenities,
 // host) are stored as Json rather than columns: their shape differs per
 // property (FLN001 has a parking identifier, GRM001 doesn't) and they map 1:1
-// to the challenge brief's JSON. Typed access lives in lib/types/property.ts.
+// to the source property JSON. Typed access lives in lib/types/property.ts.
 model Property {
   code             String   @id
   name             String
@@ -42,8 +42,8 @@ model Property {
   @@map("properties")
 }
 
-// Cached AI-generated local guide for a property (challenge requires caching
-// generated content). 1:1 with Property — propertyCode is both the foreign key
+// Cached AI-generated local guide for a property (cached to avoid regenerating
+// on each visit). 1:1 with Property — propertyCode is both the foreign key
 // and primary key, so regeneration is a simple upsert. `content` holds the
 // validated ExperienceGuideSchema output; `model` records which AI model
 // produced it, enabling cache invalidation when the model changes.

@@ -51,8 +51,8 @@ export default async function Home() {
       <footer className="mt-16 bg-navy py-12 text-white">
         <div className="mx-auto w-full max-w-2xl px-4 text-center text-xs text-white/70 md:max-w-5xl lg:max-w-6xl">
           <p>
-            Built as a technical challenge for Seazone&apos;s AI Builder
-            position.
+            Demonstração de guia digital personalizado por imóvel, gerado por
+            IA.
           </p>
           <a
             href="https://github.com/hassanrodrigues/seazone-ai-guide"
