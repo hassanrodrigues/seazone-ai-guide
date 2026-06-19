@@ -46,7 +46,7 @@ Imóveis de demonstração:
 
 1. Clonar o repositório
 2. `npm install`
-3. Copiar `.env.example` pra `.env.local` e preencher
+3. Criar o `.env` na raiz e preencher: `cp .env.example .env`
 
 ### Alternativa: Postgres local via Docker
 
@@ -60,7 +60,7 @@ docker run -d \
   -p 5432:5432 \
   postgres:16
 
-# Depois, em .env.local:
+# Depois, em .env:
 # DATABASE_URL=postgresql://postgres:postgres@localhost:5432/seazone
 ```
 
@@ -78,6 +78,11 @@ Qualquer Postgres 14+ funciona — Supabase, Railway, RDS, etc.
 | `ANTHROPIC_API_KEY`     | Sim         | Chave da API Anthropic para Claude                                         |
 | `GOOGLE_PLACES_API_KEY` | Não         | Habilita modo RAG (lugares reais em vez de conhecimento parametric do LLM) |
 
+> O Prisma CLI lê `.env`. O Next.js lê `.env` (e `.env.local` como override
+> opcional). Manter apenas o `.env` é suficiente para rodar o projeto — e
+> garante que migrations/seed (Prisma CLI) e a app (Next.js) usem a mesma
+> `DATABASE_URL`.
+
 ## Obtendo Suas Próprias API Keys
 
 Este projeto precisa de dois serviços externos. As chaves de produção não são
@@ -92,7 +97,7 @@ Caminho mais rápido: conta gratuita no Neon.
 2. Crie um novo projeto (qualquer nome, região "AWS US East" recomendada)
 3. Copie a "Connection string" (formato:
    `postgresql://user:pass@host/db?sslmode=require`)
-4. Cole em `.env.local` como `DATABASE_URL`
+4. Cole em `.env` como `DATABASE_URL`
 
 Alternativa: qualquer Postgres 14+ (Docker local, Supabase, Railway, etc.)
 funciona da mesma forma.
@@ -102,7 +107,7 @@ funciona da mesma forma.
 1. Cadastre-se em https://console.anthropic.com
 2. Settings → API Keys → Create Key
 3. Copie a chave (começa com `sk-ant-...`)
-4. Cole em `.env.local` como `ANTHROPIC_API_KEY`
+4. Cole em `.env` como `ANTHROPIC_API_KEY`
 
 Contas novas recebem $5 USD de free credit. Rodar este projeto end-to-end
 (gerar os 4 guias + algumas dezenas de mensagens no chat) custa menos de
@@ -143,7 +148,7 @@ Para habilitar modo RAG:
 4. Habilite Billing no projeto (requer cartão de crédito; $200/mês de free
    credit cobrem este projeto facilmente)
 5. Credentials → Create API Key → copie
-6. Cole em `.env.local` como `GOOGLE_PLACES_API_KEY`
+6. Cole em `.env` como `GOOGLE_PLACES_API_KEY`
 
 **Verificando o setup:** após configurar `DATABASE_URL` e `ANTHROPIC_API_KEY` e
 rodar `npx prisma db seed`, você deve ver "4 properties seeded" no terminal.

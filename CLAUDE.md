@@ -248,7 +248,8 @@ Where human judgment mattered:
 
 ## Running Locally
 
-Copy .env.example to .env.local and fill DATABASE_URL and ANTHROPIC_API_KEY.
+Copy .env.example to .env and fill DATABASE_URL and ANTHROPIC_API_KEY.
+(The Prisma CLI reads .env; Next.js reads .env too, so a single .env covers both.)
 Then run: npm install, npx prisma migrate dev, npx prisma db seed, npm run dev.
 
 Test routes:
