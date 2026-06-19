@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import type { UIMessage } from "ai";
 
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Message } from "@/components/chat/Message";
 
 interface MessageListProps {
@@ -13,6 +12,9 @@ interface MessageListProps {
   /** Rendered above the conversation (welcome message + suggested questions). */
   topSlot?: React.ReactNode;
 }
+
+/** Treat the user as "at the bottom" within this many px of the end. */
+const BOTTOM_THRESHOLD_PX = 50;
 
 /** Concatenate the text parts of a v6 UIMessage. */
 function messageText(message: UIMessage): string {
@@ -39,14 +41,35 @@ function TypingIndicator() {
 }
 
 export function MessageList({ messages, pending, topSlot }: MessageListProps) {
-  const endRef = useRef<HTMLDivElement>(null);
+  // The scrollable viewport itself — owns overflow, so we can read its metrics.
+  const viewportRef = useRef<HTMLDivElement>(null);
+  // Whether the user is pinned to the bottom. Starts true (initial view) and is
+  // updated on every scroll, so it reflects intent right before new content
+  // arrives.
+  const atBottomRef = useRef(true);
 
+  function handleScroll() {
+    const el = viewportRef.current;
+    if (!el) return;
+    atBottomRef.current =
+      el.scrollHeight - el.scrollTop - el.clientHeight < BOTTOM_THRESHOLD_PX;
+  }
+
+  // Auto-scroll to the newest content ONLY when the user was already at the
+  // bottom. If they scrolled up to read history, leave their position alone —
+  // even as stream tokens keep mutating `messages`.
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!atBottomRef.current) return;
+    const el = viewportRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [messages, pending]);
 
   return (
-    <ScrollArea className="flex-1">
+    <div
+      ref={viewportRef}
+      onScroll={handleScroll}
+      className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+    >
       <div className="flex flex-col gap-3 p-4">
         {topSlot}
         {messages.map(
@@ -58,8 +81,7 @@ export function MessageList({ messages, pending, topSlot }: MessageListProps) {
             ),
         )}
         {pending && <TypingIndicator />}
-        <div ref={endRef} />
       </div>
-    </ScrollArea>
+    </div>
   );
 }
