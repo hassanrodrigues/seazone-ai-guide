@@ -82,4 +82,30 @@ describe("guideService.getOrGenerate", () => {
     expect(callArg.system).toContain("Florianópolis");
     expect(callArg.system).toContain("Trindade");
   });
+
+  it("regenerates when cached content fails schema validation", async () => {
+    // Stale/malformed cache row (missing the required arrays).
+    guideFindUnique.mockResolvedValue({ content: { welcomeMessage: "stale" } });
+    generateObject.mockResolvedValue({ object: sampleGuide });
+
+    const result = await getOrGenerate("FLN001");
+
+    expect(result).toEqual(sampleGuide);
+    expect(generateObject).toHaveBeenCalledTimes(1);
+  });
+
+  it("persists the regenerated guide, overwriting a schema-invalid cache row", async () => {
+    guideFindUnique.mockResolvedValue({ content: { welcomeMessage: "stale" } });
+    generateObject.mockResolvedValue({ object: sampleGuide });
+
+    await getOrGenerate("FLN001");
+
+    expect(guideUpsert).toHaveBeenCalledTimes(1);
+    expect(guideUpsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { propertyCode: "FLN001" },
+        update: expect.objectContaining({ content: sampleGuide }),
+      }),
+    );
+  });
 });
